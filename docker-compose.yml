@@ -55,3 +55,5 @@ secrets:
     file: ./devsecrets/postgres_password
   payment_token:
     file: ./devsecrets/payment_token
+
+# Adding a comment to see if github actions was set up correctly
