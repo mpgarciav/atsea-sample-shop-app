@@ -44,19 +44,6 @@ jobs:
         name: push the reverse proxy image
         run:  docker push --all-tags ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverse-proxy 
 
-        # Here goes the aws bit
-      - 
-        name: Trigger end to end tests
-        run: |
-          curl --request POST \
-          --url https://api.github.com/repos/crmejiam/atsea-sample-app-tests/dispatches \
-          --header 'authorization: Bearer ${{ secrets.ACCESS_TOKEN }}' \
-          --header 'Accept: application/vnd.github.v3+json' \
-          --data '{
-            "event_type": "deployed"
-            }' \
-          --fail
-
   deploy:
     runs-on: ubuntu-latest
     steps:
@@ -75,3 +62,31 @@ jobs:
           state=`(aws ec2 describe-instance-status --instance-id ${{ secrets.PYC_INSTANCE_ID }}) | grep -w "running" | wc -l`;
           if [ "$state" -eq 0 ]; then aws ec2 start-instances --instance-ids ${{ secrets.PYC_INSTANCE_ID }}; fi
       
+      - name: Transfer files via ssh password
+        uses: appleboy/scp-action@master
+        with:      
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.INSTANCE_USERNAME }}
+          key: ${{ secrets.INSTANCE_KEY }}
+          source: "./docker-compose.yml"
+          target: "~/${{ secrets.INSTANCE_USERNAME }}"
+
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.INSTANCE_USERNAME }}
+          key: $${{ secrets.INSTANCE_KEY }}
+          script: |
+                docker-compose up -d
+
+      - name: Trigger end to end tests
+        run: |
+          curl --request POST \
+          --url https://api.github.com/repos/crmejiam/atsea-sample-app-tests/dispatches \
+          --header 'authorization: Bearer ${{ secrets.ACCESS_TOKEN }}' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --data '{
+            "event_type": "deployed"
+            }' \
+          --fail
