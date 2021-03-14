@@ -21,27 +21,26 @@ jobs:
           password: ${{ secrets.CRISTO_DOCKERHUB_TOKEN }}
       -
         name: Build and push the java app image
-        run: 
-          - docker build app/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/javaApp:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/javaApp:${{ github.sha }} 
-          - docker push -a ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/java_app
+        run:
+          docker build app/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/javaApp:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/javaApp:${{ github.sha }} 
+          docker push -a ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/java_app
       -
         name: Build and push the database image
         run: 
-          - docker build database/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/database:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/database:${{ github.sha }} 
-          - docker push -a ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/database
+          docker build database/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/database:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/database:${{ github.sha }} 
+          docker push -a ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/database
       -  
         name: Build and push the payment gateway image
         run: 
-          - docker build payment_gateway/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/paymentGateway:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/paymentGateway:${{ github.sha }} 
-          - docker push -a ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/paymentGateway  
+          docker build payment_gateway/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/paymentGateway:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/paymentGateway:${{ github.sha }} 
+          docker push -a ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/paymentGateway  
       -  
         name: Build and push the reverse proxy image
         run: 
-          - docker build reverse_proxy/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverseProxy:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverseProxy:${{ github.sha }} 
-          - docker push -a ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverse_proxy 
+          docker build reverse_proxy/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverseProxy:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverseProxy:${{ github.sha }} 
+          docker push -a ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverse_proxy 
 
         # Here goes the aws bit
-
       - 
         name: Trigger end to end tests
         run: |
