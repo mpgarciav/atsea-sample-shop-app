@@ -20,25 +20,29 @@ jobs:
           username: ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}
           password: ${{ secrets.CRISTO_DOCKERHUB_TOKEN }}
       -
-        name: Build and push the java app image
-        run:
-          docker build app/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/java-app:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/java-app:${{ github.sha }} 
-          docker push --all-tags ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/java-app
+        name: Build the java app image
+        run: docker build app/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/java-app:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/java-app:${{ github.sha }} 
+      -  
+        name: push the java app image
+        run : docker push --all-tags ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/java-app
       -
-        name: Build and push the database image
-        run: 
-          docker build database/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/database:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/database:${{ github.sha }} 
-          docker push --all-tags ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/database
+        name: Build the database image
+        run: docker build database/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/database:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/database:${{ github.sha }} 
+      -
+        name: push the database image  
+        run:  docker push --all-tags ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/database        
       -  
-        name: Build and push the payment gateway image
-        run: 
-          docker build payment_gateway/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/payment-gateway:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/payment-gateway:${{ github.sha }} 
-          docker push --all-tags ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/payment-gateway  
+        name: Build the payment gateway image
+        run: docker build payment_gateway/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/payment-gateway:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/payment-gateway:${{ github.sha }} 
+      -
+        name: push the payment gateway image
+        run:  docker push --all-tags ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/payment-gateway  
       -  
-        name: Build and push the reverse proxy image
-        run: 
-          docker build reverse_proxy/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverse-proxy:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverse-proxy:${{ github.sha }} 
-          docker push --all-tags ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverse-proxy 
+        name: Build the reverse proxy image
+        run: docker build reverse_proxy/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverse-proxy:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverse-proxy:${{ github.sha }} 
+      -
+        name: push the reverse proxy image
+        run:  docker push --all-tags ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverse-proxy 
 
         # Here goes the aws bit
       - 
