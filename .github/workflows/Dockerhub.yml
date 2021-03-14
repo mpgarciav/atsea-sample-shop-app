@@ -22,8 +22,8 @@ jobs:
       -
         name: Build and push the java app image
         run:
-          docker build app/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/javaApp:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/javaApp:${{ github.sha }} 
-          docker push -a ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/java_app
+          docker build app/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/java-app:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/java-app:${{ github.sha }} 
+          docker push -a ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/java-app
       -
         name: Build and push the database image
         run: 
@@ -32,13 +32,13 @@ jobs:
       -  
         name: Build and push the payment gateway image
         run: 
-          docker build payment_gateway/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/paymentGateway:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/paymentGateway:${{ github.sha }} 
-          docker push -a ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/paymentGateway  
+          docker build payment_gateway/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/payment-gateway:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/payment-gateway:${{ github.sha }} 
+          docker push -a ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/payment-gateway  
       -  
         name: Build and push the reverse proxy image
         run: 
-          docker build reverse_proxy/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverseProxy:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverseProxy:${{ github.sha }} 
-          docker push -a ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverse_proxy 
+          docker build reverse_proxy/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverse-proxy:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverse-proxy:${{ github.sha }} 
+          docker push -a ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverse-proxy 
 
         # Here goes the aws bit
       - 
