@@ -72,6 +72,6 @@ jobs:
       
       - name: Check if the instance is running
         run: |
-          state=$(aws ec2 describe-instance-status --instance-id {{ secrets.PYC_INSTANCE_ID }})
-          if [ "$state" = "0" ] then; aws ec2 start-instances --instance-ids {{ secrets.PYC_INSTANCE_ID }}; fi
+          state=$(aws ec2 describe-instance-status --instance-id ${{ secrets.PYC_INSTANCE_ID }})
+          if [ "$state" = "0" ] then; aws ec2 start-instances --instance-ids ${{ secrets.PYC_INSTANCE_ID }}; fi
       
