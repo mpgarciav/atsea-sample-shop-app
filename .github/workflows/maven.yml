@@ -24,7 +24,7 @@ jobs:
         
   build:
 
-    needs: setup
+    needs: set-up
     
     runs-on: ubuntu-latest
     
