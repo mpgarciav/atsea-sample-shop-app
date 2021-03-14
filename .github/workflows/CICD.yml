@@ -74,5 +74,6 @@ jobs:
         run: state=$( (aws ec2 describe-instance-status --instance-id ${{ secrets.PYC_INSTANCE_ID }}) | grep -w "running" | wc -l );
 
       - name: Running the instance if it's stopped
-        run: if [ "$state" -eq 0 ]; then aws ec2 start-instances --instance-ids ${{ secrets.PYC_INSTANCE_ID }}; fi
+        run: if [ "$state" = "0" ]; then aws ec2 start-instances --instance-ids ${{ secrets.PYC_INSTANCE_ID }}; fi
       
+  
