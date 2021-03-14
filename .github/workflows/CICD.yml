@@ -76,7 +76,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.INSTANCE_USERNAME }}
-          key: $${{ secrets.INSTANCE_KEY }}
+          key: ${{ secrets.INSTANCE_KEY }}
           script: |
                 docker-compose up -d
 
