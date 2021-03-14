@@ -39,4 +39,18 @@ jobs:
         run: 
           - docker build reverse_proxy/ -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverseProxy:latest -t ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverseProxy:${{ github.sha }} 
           - docker push -a ${{ secrets.CRISTO_DOCKERHUB_USERNAME }}/reverse_proxy 
+
+        # Here goes the aws bit
+
+      - 
+        name: Trigger end to end tests
+        run: |
+          curl --request POST \
+          --url https://api.github.com/repos/crmejiam/atsea-sample-app-tests/dispatches \
+          --header 'authorization: Bearer ${{ secrets.ACCESS_TOKEN }}' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --data '{
+            "event_type": "deployed"
+            }' \
+          --fail
       
