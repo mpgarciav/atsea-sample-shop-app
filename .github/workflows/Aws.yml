@@ -1,0 +1,25 @@
+name: Deployment to EC2 Instance
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+      
+      - name: Check if the instance is running
+        run: |
+          state=$(aws ec2 describe-instance-status --instance-id {{ secrets.PYC_INSTANCE_ID }})
+          if [ "$state" = "0" ] then; aws ec2 start-instances --instance-ids {{ secrets.PYC_INSTANCE_ID }}; fi
