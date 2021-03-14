@@ -2,13 +2,11 @@ version: "3.1"
 
 services:
   reverse_proxy:
-    build: ./reverse_proxy
+    image: crmejiam/reverse-proxy
     user: nginx
 
   database:
-    build: 
-       context: ./database
-    image: atsea_db
+    image: crmejiam/database
     user: postgres
     environment:
       POSTGRES_USER: gordonuser
@@ -22,10 +20,7 @@ services:
       - postgres_password
 
   appserver:
-    build:
-       context: app
-       dockerfile: Dockerfile
-    image: atsea_app
+    image: crmejiam/java-app
     user: gordon
     ports:
       - "8080:8080" 
@@ -37,8 +32,7 @@ services:
       - postgres_password
 
   payment_gateway:
-    build:
-      context: payment_gateway
+    image: crmejiam/payment-gateway
     networks:
       - payment
     secrets:
