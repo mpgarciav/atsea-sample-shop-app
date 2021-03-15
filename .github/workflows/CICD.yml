@@ -62,16 +62,16 @@ jobs:
           state=`(aws ec2 describe-instance-status --instance-id ${{ secrets.PYC_INSTANCE_ID }}) | grep -w "running" | wc -l`;
           if [ "$state" -eq 0 ]; then aws ec2 start-instances --instance-ids ${{ secrets.PYC_INSTANCE_ID }}; fi
       
-      - name: Transfer files via ssh password
+      - name: Transfer files via ssh key
         uses: appleboy/scp-action@master
         with:      
           host: ${{ secrets.HOST }}
           username: ${{ secrets.INSTANCE_USERNAME }}
           key: ${{ secrets.INSTANCE_KEY }}
           source: "./docker-compose.yml"
-          target: "~/${{ secrets.INSTANCE_USERNAME }}"
+          target: "/home/${{ secrets.INSTANCE_USERNAME }}"
 
-      - name: executing remote ssh commands using password
+      - name: executing remote ssh commands using key
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
