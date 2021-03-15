@@ -68,7 +68,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.INSTANCE_USERNAME }}
           key: ${{ secrets.INSTANCE_KEY }}
-          source: "./docker-compose.yml"
+          source: "./docker-compose.yml, ./devsecrets"
           target: "/home/${{ secrets.INSTANCE_USERNAME }}"
 
       - name: executing remote ssh commands using key
@@ -78,7 +78,6 @@ jobs:
           username: ${{ secrets.INSTANCE_USERNAME }}
           key: ${{ secrets.INSTANCE_KEY }}
           script: |
-                cd ec2-user
                 docker-compose up -d
 
       - name: Trigger end to end tests
