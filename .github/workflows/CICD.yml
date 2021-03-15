@@ -78,6 +78,7 @@ jobs:
           username: ${{ secrets.INSTANCE_USERNAME }}
           key: ${{ secrets.INSTANCE_KEY }}
           script: |
+                cd ec2-user
                 docker-compose up -d
 
       - name: Trigger end to end tests
