@@ -79,10 +79,11 @@ jobs:
           key: ${{ secrets.INSTANCE_KEY }}
           script: |
                 docker-compose up -d
+                echo "test"
 
       - name: Trigger end to end tests
         run: |
-          curl --request POST \
+          curl --request POST \ 
           --url https://api.github.com/repos/crmejiam/atsea-sample-app-tests/dispatches \
           --header 'authorization: Bearer ${{ secrets.ACCESS_TOKEN }}' \
           --header 'Accept: application/vnd.github.v3+json' \
