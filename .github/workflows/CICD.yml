@@ -79,7 +79,6 @@ jobs:
           key: ${{ secrets.INSTANCE_KEY }}
           script: |
                 docker-compose up -d
-                echo "test"
 
       - name: Trigger end to end tests
         run: |
